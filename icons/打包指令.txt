@@ -1,0 +1,6 @@
+pyinstaller -F FTP4BV_BackupData.py
+pyinstaller -i ./icons/Report.ico -F FTP4BV_DownloadReport.py
+pyinstaller -i ./icons/Erase.ico -F FTP4BV_EraseReport.py
+pyinstaller -i ./icons/Set.ico -F FTP4BV_InitDevice.py
+pyinstaller -i ./icons/Upload.ico -F FTP4BV_UpdataToBV.py
+pyinstaller -i ./icons/RTC.ico -F FTP4BV_UpdateRTC.py

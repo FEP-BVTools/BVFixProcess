@@ -1,0 +1,60 @@
+#!/bin/sh
+
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+/bin/mount -t proc proc /proc
+/bin/mount -t usbfs usbfs /proc/bus/usb
+/bin/mount -t sysfs sysfs /sys
+/bin/mount -t tmpfs mdev /dev
+mkdir /dev/pts
+mkdir /dev/shm
+mkdir /dev/snd
+/bin/mount -t devpts devpts /dev/pts
+/bin/mount -t tmpfs -o nosuid,nodev,noexec shm /dev/shm
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+/sbin/mdev -s
+/bin/mount -o remount,rw,noatime /
+/bin/mount -t tmpfs -o nosuid,nodev,noexec none /tmp
+/bin/mount -t jffs2 -o noatime,nosuid,nodev,rw /dev/mtdblock4 /bv
+/bin/hostname -F /etc/hostname
+/sbin/ifconfig lo 127.0.0.1 up
+/sbin/route add -net 127.0.0.0 netmask 255.0.0.0 lo
+/sbin/ifconfig eth0 hw ether 46:93:6D:4F:93:68 192.168.0.50 up
+
+ln -sf /dev/pcmC0D0c /dev/snd/
+ln -sf /dev/pcmC0D0p /dev/snd/
+ln -sf /dev/controlC0 /dev/snd/
+ln -sf /dev/seq /dev/snd/
+ln -sf /dev/timer /dev/snd/
+
+
+
+# Initialization for WIFI
+if [ -e /dev/wlan0 ]
+then
+	ifconfig wlan0 up
+	wpa_supplicant -B -Dwext -iwlan0 -c/etc/wpa_supplicant.conf
+	udhcpc -b -i wlan0 &
+fi
+
+#ÀÉ®×¦s¦b§PÂ_
+if [ -e /bv/AppTemp ]
+then
+chmod 777 /bv/AppTemp
+rm /bv/Mitac_BV
+mv /bv/AppTemp /bv/Mitac_BV
+fi
+
+export LD_LIBRARY_PATH=/bv
+cd bv/
+./Mitac_BV &
+
+
+portmap &
+/usr/sbin/telnetd -l /bin/sh &
+/usr/sbin/vsftpd &
+
+mount /dev/sda1 /mnt/CFBackup/
+busybox sh
+
+
+
