@@ -11,7 +11,7 @@ def SetDeviceStatus(RetryCount,DeviceID,IP_Position,FtpUser,FtpPw):
                 ftp = myFtp("192.168.1.{}".format(IP_Position))
                 ftp.Login(FtpUser, FtpPw)
                 #設定目標路徑
-                ftp.ChangeRount('..') #turn back 
+                ftp.ChangeRount('/') #移至根目錄
                 try:
                     ftp.CreatFolder(DeviceID)               
                 except:

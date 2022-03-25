@@ -13,7 +13,7 @@ def UpData(RetryCount,DeviceID,IP_Position,FtpUser,FtpPw):
                 print()
                 
                 #設定目標路徑
-                ftp.ChangeRount('..') #turn back 
+                ftp.ChangeRount('/') #移至根目錄
                 
                 if(ftp.CheckFolderExist(DeviceID)==True):                
                     #還原原始linuxrc

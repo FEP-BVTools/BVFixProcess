@@ -11,9 +11,9 @@ def SaveBackupDataProcess(RetryCount,DeviceID,IP_Position,FtpUser,FtpPw):
                 ftp = myFtp("192.168.1.{}".format(IP_Position))
                 ftp.Login(FtpUser, FtpPw)
                 print()
-                
+
                 #設定目標路徑
-                ftp.ChangeRount('..') #turn back                
+                ftp.ChangeRount('/') #移至根目錄
                 ftp.ChangeRount('bv')
 
                 #獲取需備份的檔案
