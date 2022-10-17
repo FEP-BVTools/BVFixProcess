@@ -1,5 +1,6 @@
 from FTPwork import myFtp
 from OtherFuc import UsefulFuction
+from sendmessagetoLine import LineMassage
 import os
 import ctypes, sys
 import csv
@@ -103,8 +104,8 @@ if UsefulFuction.is_admin():
                         UsefulFuction.ErrReport("Unknow Err",DVID)
                         continue
             break
-                    
 
+        LineMassage.SendErrMassage("BV資料備份完成!!!!", 1)
         input("\n結束")   
 
 
